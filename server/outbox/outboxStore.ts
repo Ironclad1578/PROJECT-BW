@@ -1,8 +1,6 @@
-// Durable outbox (in-memory impl)
 import { v4 as uuid } from 'uuid';
 
 export type OutboxStatus = 'pending'|'running'|'succeeded'|'failed';
-
 export interface OutboxItem {
   id: string;
   jobId: string;
@@ -14,28 +12,34 @@ export interface OutboxItem {
   nextAttemptAt: number; // epoch ms
   createdAt: number;
   idempotencyKey?: string;
+  name?: string; // metric tag
 }
 
-export class InMemoryOutbox {
+class InMemoryOutbox {
   private items: OutboxItem[] = [];
-  add(item: Omit<OutboxItem, 'id' | 'status' | 'attempt' | 'createdAt' | 'nextAttemptAt'>) {
-    const now = Date.now();
-    const row: OutboxItem = {
-      id: uuid(),
+
+  add(partial: Partial<OutboxItem>) {
+    const item: OutboxItem = {
+      id: partial.id ?? uuid(),
+      jobId: String(partial.jobId ?? 'unknown'),
+      tenantId: String(partial.tenantId ?? 'default'),
+      type: (partial.type ?? 'activity') as OutboxItem['type'],
+      payload: partial.payload ?? {},
       status: 'pending',
       attempt: 0,
-      createdAt: now,
-      nextAttemptAt: now,
-      ...item,
+      nextAttemptAt: Date.now(),
+      createdAt: Date.now(),
+      idempotencyKey: partial.idempotencyKey,
+      name: partial.name,
     };
-    this.items.push(row);
-    return row.id;
+    this.items.push(item);
+    return item.id;
   }
 
   claimDue(limit = 50) {
     const now = Date.now();
     const due = this.items.filter(i => i.status === 'pending' && i.nextAttemptAt <= now).slice(0, limit);
-    due.forEach(i => i.status = 'running');
+    for (const it of due) it.status = 'running';
     return due;
   }
 

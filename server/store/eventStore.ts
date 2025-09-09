@@ -1,11 +1,7 @@
-// Simple pluggable in-memory event store with idempotency by (jobId,id)
-
+/// Simple pluggable in-memory event store with idempotency by (jobId,id)
 import type { AnyDomainEvent } from '../domain/events';
 
-export interface AppendResult {
-  appended: number;
-  duplicateIds: string[];
-}
+export interface AppendResult { appended: number; duplicateIds: string[] }
 export interface EventStore {
   append(jobId: string, events: AnyDomainEvent[]): Promise<AppendResult>;
   load(jobId: string): Promise<AnyDomainEvent[]>;
@@ -14,25 +10,30 @@ export interface EventStore {
 
 type SeqEvent = AnyDomainEvent & { __seq: number };
 
-export class InMemoryEventStore implements EventStore {
+class InMemoryEventStore implements EventStore {
   private streams = new Map<string, SeqEvent[]>();
-  private seen = new Set<string>(); // idempotency key: `${jobId}:${eventId}`
-  private seqCounter = 0;
+  private idIndex = new Map<string, Set<string>>(); // jobId -> set(eventId)
+  private seq = 0;
 
   async append(jobId: string, events: AnyDomainEvent[]): Promise<AppendResult> {
     const stream = this.streams.get(jobId) ?? [];
-    const duplicateIds: string[] = [];
-    let appended = 0;
+    const seen = this.idIndex.get(jobId) ?? new Set<string>();
+    const dup: string[] = [];
+    const toAppend: SeqEvent[] = [];
 
-    for (const ev of events) {
-      const key = `${jobId}:${ev.id}`;
-      if (this.seen.has(key)) { duplicateIds.push(ev.id); continue; }
-      this.seen.add(key);
-      stream.push({ ...ev, __seq: ++this.seqCounter });
-      appended++;
+    for (const e of events) {
+      if (seen.has(e.id)) { dup.push(e.id); continue; }
+      this.seq += 1;
+      toAppend.push(Object.assign({ __seq: this.seq }, e));
+      seen.add(e.id);
     }
-    this.streams.set(jobId, stream);
-    return { appended, duplicateIds };
+
+    if (toAppend.length) {
+      stream.push(...toAppend);
+      this.streams.set(jobId, stream);
+      this.idIndex.set(jobId, seen);
+    }
+    return { appended: toAppend.length, duplicateIds: dup };
   }
 
   async load(jobId: string): Promise<AnyDomainEvent[]> {

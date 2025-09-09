@@ -14,19 +14,7 @@ export const BaseEventSchema = z.object({
   meta: z.record(z.unknown()).optional(),
 });
 
-export type BaseEvent = z.infer<typeof BaseEventSchema>;
-
-/** Narrowers for key events (extend as needed) */
-export const CertImminentSchema = BaseEventSchema.extend({
-  type: z.literal('CERT_IMMINENT'),
-  payload: z.object({ name: z.string() }),
-});
-export const CertExpiredSchema = BaseEventSchema.extend({
-  type: z.literal('CERT_EXPIRED'),
-  payload: z.object({ name: z.string() }),
-});
-
-export const JobStatusChangedSchema = BaseEventSchema.extend({
+const JobStatusChangedSchema = BaseEventSchema.extend({
   type: z.literal('JobStatusChanged'),
   payload: z.object({
     from: z.string().optional(),
@@ -36,10 +24,26 @@ export const JobStatusChangedSchema = BaseEventSchema.extend({
   }),
 });
 
+const CertImminentSchema = BaseEventSchema.extend({
+  type: z.literal('CERT_IMMINENT'),
+  payload: z.object({ name: z.string(), expiresAt: ISO }),
+});
+const CertExpiredSchema = BaseEventSchema.extend({
+  type: z.literal('CERT_EXPIRED'),
+  payload: z.object({ name: z.string(), expiresAt: ISO }),
+});
+
+const SLAEventSchemas = [
+  BaseEventSchema.extend({ type: z.literal('SLA_RESPOND_IMMINENT'), payload: z.object({ at: ISO }) }),
+  BaseEventSchema.extend({ type: z.literal('SLA_RESPOND_BREACHED'), payload: z.object({ at: ISO }) }),
+  BaseEventSchema.extend({ type: z.literal('SLA_DUE_IMMINENT'),     payload: z.object({ at: ISO }) }),
+  BaseEventSchema.extend({ type: z.literal('SLA_DUE_BREACHED'),     payload: z.object({ at: ISO }) }),
+];
+
 export const EventUnionSchema = z.discriminatedUnion('type', [
+  JobStatusChangedSchema,
   CertImminentSchema,
   CertExpiredSchema,
-  JobStatusChangedSchema,
-  // keep extending here as you add strict schemas
+  ...SLAEventSchemas,
 ]);
 export type ValidatedEvent = z.infer<typeof EventUnionSchema>;

@@ -1,4 +1,3 @@
-// Deterministic reconstitution of job snapshot from events
 import type { AnyDomainEvent } from '../domain/events';
 import type { JobSnapshot } from '../schemas/state.zod';
 
@@ -6,7 +5,7 @@ export function reduceToSnapshot(tenantId: string, jobId: string, events: AnyDom
   let status = 'Draft';
   let intent: string | undefined;
   let updatedAt = new Date(0).toISOString();
-  const data: Record<string, unknown> = {};
+  const data: Record<string, unknown> = { certImminent: [], certExpired: [], sla: [] };
 
   for (const ev of events) {
     updatedAt = ev.occurredAt;
@@ -16,17 +15,20 @@ export function reduceToSnapshot(tenantId: string, jobId: string, events: AnyDom
         intent = ev.payload.intent ?? intent;
         break;
       case 'CERT_IMMINENT':
-        data.certImminent = [...(data.certImminent as string[] ?? []), ev.payload.name];
+        (data.certImminent as string[]).push((ev.payload as any).name);
         break;
       case 'CERT_EXPIRED':
-        data.certExpired = [...(data.certExpired as string[] ?? []), ev.payload.name];
+        (data.certExpired as string[]).push((ev.payload as any).name);
         break;
-      case 'RATES_UPDATED':
-        data.lastTotals = ev.payload;
+      case 'SLA_RESPOND_IMMINENT':
+      case 'SLA_RESPOND_BREACHED':
+      case 'SLA_DUE_IMMINENT':
+      case 'SLA_DUE_BREACHED':
+        (data.sla as any[]).push({ type: ev.type, at: ev.occurredAt });
         break;
       default:
-        // keep additive map of last-seen per-event type if useful
-        data[`last_${ev.type}`] = ev.payload ?? true;
+        // keep last-seen payload by type
+        (data as any)[`last_${ev.type}`] = ev.payload ?? true;
     }
   }
 

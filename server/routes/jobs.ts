@@ -10,29 +10,36 @@ export const jobsRouter = express.Router();
 jobsRouter.post('/:jobId/events', async (req, res) => {
   const { jobId } = req.params;
   const tenantId = String(req.query.tenantId ?? 'default');
-  const events = (Array.isArray(req.body) ? req.body : [req.body]).map((e:any) => ({
-    version: 1,
+  const list = Array.isArray(req.body) ? req.body : [req.body];
+
+  const events = list.map((e:any) => ({
+    version: 1 as const,
     occurredAt: e.occurredAt ?? new Date().toISOString(),
     id: e.id ?? uuid(),
-    tenantId, jobId,
     type: e.type,
+    tenantId,
+    jobId,
     payload: e.payload ?? {},
     meta: e.meta ?? {},
   }));
-  const result = await eventStore.append(jobId, events as any);
-  // fan-out to subscribers
-  await Promise.all(events.map(handleEvent));
+
+  const result = await eventStore.append(jobId, events);
+  // fan-out subscribers for newly appended only
+  const appendedIds = new Set(events.map((e:any) => e.id));
+  if (result.appended) {
+    for (const ev of events) {
+      if (appendedIds.has(ev.id)) await handleEvent(ev as any);
+    }
+  }
   res.json(result);
 });
 
-/** Full stream */
 jobsRouter.get('/:jobId/stream', async (req, res) => {
   const { jobId } = req.params;
   const events = await eventStore.load(jobId);
   res.json(events);
 });
 
-/** Snapshot (reduced) */
 jobsRouter.get('/:jobId/snapshot', async (req, res) => {
   const { jobId } = req.params;
   const tenantId = String(req.query.tenantId ?? 'default');
