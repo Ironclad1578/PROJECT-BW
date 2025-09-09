@@ -1,4 +1,4 @@
-// PATH: src/machines/documentSetMachine.ts
+﻿// PATH: src/machines/documentSetMachine.ts
 import { createMachine, assign, sendParent } from 'xstate';
 
 interface Ctx {
@@ -41,7 +41,7 @@ export const documentSetMachine = createMachine<Ctx, Ev>({
         {
           cond: docsComplete,
           target: 'Complete',
-          actions: sendParent({ type: 'DOCS_COMPLETE' } as any), // ✅ real action, not a lambda
+          actions: sendParent({ type: 'DOCS_COMPLETE' } as any), // âœ… real action, not a lambda
         },
       ],
       on: {

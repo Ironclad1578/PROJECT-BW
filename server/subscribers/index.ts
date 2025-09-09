@@ -1,4 +1,4 @@
-import type { AnyDomainEvent } from '../domain/events';
+﻿import type { AnyDomainEvent } from '../domain/events';
 import { outbox } from '../outbox/outboxStore';
 import { counters } from '../observability/metrics';
 
@@ -11,7 +11,7 @@ export async function handleEvent(ev: AnyDomainEvent) {
       jobId: ev.jobId,
       type: 'activity',
       name: 'status-change',
-      payload: { message: `Status → ${ev.payload.to}`, meta: ev.payload },
+      payload: { message: `Status â†’ ${ev.payload.to}`, meta: ev.payload },
     });
   }
 

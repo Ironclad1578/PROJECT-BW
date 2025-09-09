@@ -1,4 +1,4 @@
-// PATH: src/machines/certificateMonitorMachine.ts
+﻿// PATH: src/machines/certificateMonitorMachine.ts
 import { createMachine, assign, sendParent, actions } from 'xstate';
 const { pure } = actions;
 
@@ -36,7 +36,7 @@ export const certificateMonitorMachine = (opts: { jobId: string; warnBeforeDays?
       jobId: opts.jobId,
       certs: {},
       warnBeforeMs: (opts.warnBeforeDays ?? 7) * 24 * 60 * 60 * 1000,
-      notified: {}, // ← NEW
+      notified: {}, // â† NEW
     },
     states: {
       Monitoring: {

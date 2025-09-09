@@ -1,4 +1,4 @@
-// PATH: src/machines/schedulerMachine.ts
+﻿// PATH: src/machines/schedulerMachine.ts
 import { createMachine, assign, sendParent } from 'xstate';
 
 interface Ctx {

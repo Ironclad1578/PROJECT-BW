@@ -1,4 +1,4 @@
-/* ---------- Intents (not states) ---------- */
+﻿/* ---------- Intents (not states) ---------- */
 export type JobIntent = 'New'|'FollowOn'|'Emergency'|'Reactive'|'Planned'|'Warranty'|'FollowOnWorks';
 export const INTENT_LABELS: Record<JobIntent,string> = {
   New:'New Request', FollowOn:'Follow on Request', Emergency:'Emergency Order',

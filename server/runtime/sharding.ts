@@ -1,4 +1,4 @@
-// Consistent hash sharding (skeleton)
+﻿// Consistent hash sharding (skeleton)
 export function shardKey(tenantId: string, jobId: string, shards = 16) {
   const key = `${tenantId}:${jobId}`;
   let h = 2166136261;

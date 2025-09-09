@@ -1,4 +1,4 @@
-// PATH: src/machines/incidentMachine.ts
+﻿// PATH: src/machines/incidentMachine.ts
 import { createMachine, sendParent } from 'xstate';
 import { fakeApi } from '@/api/fakeApi';
 import type { IncidentStatus, IncidentType } from '@/constants/codes';
@@ -6,7 +6,7 @@ import type { IncidentStatus, IncidentType } from '@/constants/codes';
 interface IncidentContext {
   id: string;
   jobId: string;
-  tenantId?: string;             // ← NEW: to emit domain events server-side
+  tenantId?: string;             // â† NEW: to emit domain events server-side
   type: IncidentType;
   status: IncidentStatus;
 }
@@ -22,7 +22,7 @@ export const incidentMachine = (seed: Partial<IncidentContext>) =>
     context: {
       id: seed.id ?? 'temp',
       jobId: seed.jobId ?? '',
-      tenantId: seed.tenantId,   // ← NEW
+      tenantId: seed.tenantId,   // â† NEW
       type: (seed.type ?? 'Other') as IncidentType,
       status: (seed.status ?? 'Logged') as IncidentStatus,
     },

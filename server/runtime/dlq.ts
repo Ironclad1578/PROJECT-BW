@@ -1,4 +1,4 @@
-export type DLQItem = { id: string; tenantId: string; jobId?: string; reason: string; payload: unknown; at: string };
+﻿export type DLQItem = { id: string; tenantId: string; jobId?: string; reason: string; payload: unknown; at: string };
 const items: DLQItem[] = [];
 
 export function pushDLQ(item: DLQItem) { items.push(item); }

@@ -1,4 +1,4 @@
-import { eventStore } from '../../store/eventStore';
+﻿import { eventStore } from '../../store/eventStore';
 
 export async function slaSignals(jobId: string) {
   const events = await eventStore.load(jobId);

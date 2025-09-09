@@ -1,4 +1,4 @@
-import express from 'express';
+﻿import express from 'express';
 import { eventStore } from '../store/eventStore';
 import { reduceToSnapshot } from '../replay/reconstitute';
 import { handleEvent } from '../subscribers/index';

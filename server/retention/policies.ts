@@ -1,4 +1,4 @@
-export interface RetentionPolicy {
+﻿export interface RetentionPolicy {
   archiveAfterDays: number;
   purgeAfterDays: number;
 }

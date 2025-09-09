@@ -1,4 +1,4 @@
-import type { JobSnapshot } from '../schemas/state.zod';
+﻿import type { JobSnapshot } from '../schemas/state.zod';
 
 export interface SnapshotStore {
   save(jobId: string, snapshot: JobSnapshot, version: number): Promise<void>;

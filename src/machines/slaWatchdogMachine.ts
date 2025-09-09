@@ -1,4 +1,4 @@
-// PATH: src/machines/slaWatchdogMachine.ts
+﻿// PATH: src/machines/slaWatchdogMachine.ts
 import { createMachine, assign, sendParent } from 'xstate';
 
 interface Ctx {

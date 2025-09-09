@@ -1,4 +1,4 @@
-import { z } from 'zod';
+﻿import { z } from 'zod';
 
 export const UUID = z.string().min(8);
 export const ISO = z.string().datetime();

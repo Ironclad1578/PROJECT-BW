@@ -1,4 +1,4 @@
-// PATH: src/policy/policies.ts
+﻿// PATH: src/policy/policies.ts
 import type { JobIntent } from '@/constants/codes';
 
 export type TradeKey =

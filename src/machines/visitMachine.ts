@@ -1,11 +1,11 @@
-import { createMachine, assign, sendParent } from 'xstate';
+﻿import { createMachine, assign, sendParent } from 'xstate';
 import { fakeApi } from '@/api/fakeApi';
 import type { VisitStatus, VisitOutcome } from '@/constants/codes';
 
 interface VisitContext {
   id: string;
   worksOrderId: string;
-  jobId?: string;       // optional: lets us append into the job’s stream
+  jobId?: string;       // optional: lets us append into the jobâ€™s stream
   tenantId?: string;    // NEW: required for server event appends
   status: VisitStatus;
   outcome?: VisitOutcome;

@@ -1,4 +1,4 @@
-// Canonical domain event definitions (runtime-agnostic, versioned)
+﻿// Canonical domain event definitions (runtime-agnostic, versioned)
 
 export type UUID = string;
 

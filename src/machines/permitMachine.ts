@@ -1,4 +1,4 @@
-// PATH: src/machines/permitMachine.ts
+﻿// PATH: src/machines/permitMachine.ts
 import { createMachine, sendParent } from 'xstate';
 import { fakeApi } from '@/api/fakeApi';
 import type { PermitStatus } from '@/constants/codes';
@@ -6,7 +6,7 @@ import type { PermitStatus } from '@/constants/codes';
 interface PermitContext {
   id: string;
   jobId: string;
-  tenantId?: string;     // ← NEW: to emit server events when available
+  tenantId?: string;     // â† NEW: to emit server events when available
   status: PermitStatus;
   expiresAt?: string;    // ISO (optional)
 }
@@ -23,7 +23,7 @@ export const permitMachine = (seed: Partial<PermitContext>) =>
     context: {
       id: seed.id ?? 'temp',
       jobId: seed.jobId ?? '',
-      tenantId: seed.tenantId,                // ← NEW
+      tenantId: seed.tenantId,                // â† NEW
       status: (seed.status ?? 'Draft') as PermitStatus,
       expiresAt: seed.expiresAt,
     },

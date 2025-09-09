@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
 const BASE = (import.meta as any)?.env?.VITE_API_URL ?? process.env.API_URL ?? 'http://localhost:3100';
 
 async function req<T>(path: string, opts: RequestInit & { asBlob?: boolean } = {}): Promise<T> {

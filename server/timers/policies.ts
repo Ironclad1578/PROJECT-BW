@@ -1,4 +1,4 @@
-// Pure computations that propose timers given job state/policy
+﻿// Pure computations that propose timers given job state/policy
 export interface SLAPolicy {
   respondBy?: number; // epoch ms
   dueBy?: number;

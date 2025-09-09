@@ -1,4 +1,4 @@
-// PATH: src/machines/materialsMachine.ts
+﻿// PATH: src/machines/materialsMachine.ts
 import { createMachine, assign, sendParent } from 'xstate';
 import { fakeApi } from '@/api/fakeApi';
 import type { MaterialsStatus } from '@/constants/codes';
@@ -6,7 +6,7 @@ import type { MaterialsStatus } from '@/constants/codes';
 interface MaterialsContext {
   id: string;
   jobId: string;
-  tenantId?: string;          // ← NEW: allows server event appends
+  tenantId?: string;          // â† NEW: allows server event appends
   status: MaterialsStatus;
   expectedAt?: string;
 }
@@ -23,7 +23,7 @@ export const materialsMachine = (seed: Partial<MaterialsContext>) =>
     context: {
       id: seed.id ?? 'temp',
       jobId: seed.jobId ?? '',
-      tenantId: seed.tenantId,                              // ← NEW
+      tenantId: seed.tenantId,                              // â† NEW
       status: (seed.status ?? 'Needed') as MaterialsStatus,
       expectedAt: seed.expectedAt,
     },

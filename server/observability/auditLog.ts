@@ -1,4 +1,4 @@
-type Row = {
+﻿type Row = {
   tenantId: string;
   jobId: string;
   type: string;

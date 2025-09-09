@@ -1,4 +1,4 @@
-// Durable timer worker: converts due timers into domain events
+﻿// Durable timer worker: converts due timers into domain events
 import { timerStore } from './timerStore';
 import { eventStore } from '../store/eventStore';
 import { nowIso } from '../domain/events';

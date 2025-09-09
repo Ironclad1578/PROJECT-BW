@@ -1,4 +1,4 @@
-// Guidance utilities to re-bootstrap child actors from a snapshot (no runtime binding here).
+﻿// Guidance utilities to re-bootstrap child actors from a snapshot (no runtime binding here).
 import type { JobSnapshot } from '../schemas/state.zod';
 
 export interface BootstrapPlan {

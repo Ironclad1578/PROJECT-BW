@@ -1,4 +1,4 @@
-// PATH: src/machines/eligibilityMachine.ts
+﻿// PATH: src/machines/eligibilityMachine.ts
 import { createMachine, sendParent, assign } from 'xstate';
 
 interface Ctx {

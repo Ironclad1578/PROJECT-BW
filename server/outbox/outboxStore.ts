@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+﻿import { v4 as uuid } from 'uuid';
 
 export type OutboxStatus = 'pending'|'running'|'succeeded'|'failed';
 export interface OutboxItem {

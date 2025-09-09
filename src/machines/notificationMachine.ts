@@ -1,4 +1,4 @@
-// PATH: src/machines/notificationMachine.ts
+﻿// PATH: src/machines/notificationMachine.ts
 import { createMachine, assign } from 'xstate';
 import { fakeApi } from '@/api/fakeApi';
 

@@ -1,4 +1,4 @@
-// PATH: src/machines/qaReviewMachine.ts
+﻿// PATH: src/machines/qaReviewMachine.ts
 import { createMachine, sendParent } from 'xstate';
 
 interface Ctx { id: string; jobId: string; reviewerId?: string; notes?: string; }

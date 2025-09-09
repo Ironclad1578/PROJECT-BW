@@ -1,4 +1,4 @@
-// PATH: src/machines/jobMachine.ts
+﻿// PATH: src/machines/jobMachine.ts
 import { createMachine, assign, spawn, actions } from 'xstate';
 const { send } = actions;
 import { fakeApi } from '@/api/fakeApi';
@@ -117,7 +117,7 @@ type Events =
   | { type: 'SYNC'; status: JobStatus; [k: string]: any }
   | { type: 'FLAGS'; flags: Partial<JobContext> }
 
-  // commercial child → parent
+  // commercial child â†’ parent
   | { type: 'COMMERCIAL_SUBMITTED'; kind: 'Quote'|'Variation'|'Uplift' }
   | { type: 'COMMERCIAL_APPROVED';  kind: 'Quote'|'Variation'|'Uplift' }
   | { type: 'COMMERCIAL_REJECTED';  kind: 'Quote'|'Variation'|'Uplift' }
@@ -180,7 +180,7 @@ function persist(ctx: JobContext, next: JobStatus, auditType: string, meta: Reco
     tenantId: ctx.tenantId,
     jobId: ctx.jobId,
     type: 'JobStatusChanged',
-    message: `Status changed: ${ctx.status} → ${next}`,
+    message: `Status changed: ${ctx.status} â†’ ${next}`,
     meta: { event: auditType, from: ctx.status, to: next, ...meta },
   });
   // Canonical domain event + optional notifier

@@ -1,4 +1,4 @@
-// PATH: src/machines/workItemMachine.ts
+﻿// PATH: src/machines/workItemMachine.ts
 import { createMachine, assign, sendParent } from 'xstate';
 import { fakeApi } from '@/api/fakeApi';
 import type { WorkItemKind, WorkItemStatus } from '@/constants/codes';
@@ -6,7 +6,7 @@ import type { WorkItemKind, WorkItemStatus } from '@/constants/codes';
 interface WorkItemContext {
   id: string;
   jobId: string;
-  tenantId?: string;           // ← NEW: so we can append domain events server-side
+  tenantId?: string;           // â† NEW: so we can append domain events server-side
   kind: WorkItemKind;
   status: WorkItemStatus;
   version: number;
@@ -34,7 +34,7 @@ export const workItemMachine = (seed: Partial<WorkItemContext>) =>
     context: {
       id: seed.id ?? 'temp',
       jobId: seed.jobId ?? '',
-      tenantId: seed.tenantId, // ← NEW (may be undefined; we guard appends)
+      tenantId: seed.tenantId, // â† NEW (may be undefined; we guard appends)
       kind: (seed.kind ?? 'Quote') as WorkItemKind,
       status: (seed.status ?? 'Required') as WorkItemStatus,
       version: seed.version ?? 1,

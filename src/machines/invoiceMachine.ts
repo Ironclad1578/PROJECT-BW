@@ -1,4 +1,4 @@
-// PATH: src/machines/invoiceMachine.ts
+﻿// PATH: src/machines/invoiceMachine.ts
 import { createMachine, assign, sendParent } from 'xstate';
 import { fakeApi } from '@/api/fakeApi';
 import type { InvoiceStatus } from '@/constants/codes';
@@ -6,7 +6,7 @@ import type { InvoiceStatus } from '@/constants/codes';
 interface InvoiceContext {
   id: string;
   jobId: string;
-  tenantId?: string;          // ← NEW: enables server event appends
+  tenantId?: string;          // â† NEW: enables server event appends
   status: InvoiceStatus;
   dueAt?: string;
   paidAmount?: number;
@@ -26,7 +26,7 @@ export const invoiceMachine = (seed: Partial<InvoiceContext>) =>
     context: {
       id: seed.id ?? 'temp',
       jobId: seed.jobId ?? '',
-      tenantId: seed.tenantId,                // ← NEW
+      tenantId: seed.tenantId,                // â† NEW
       status: (seed.status ?? 'Draft') as InvoiceStatus,
       dueAt: seed.dueAt,
       paidAmount: seed.paidAmount ?? 0,

@@ -1,4 +1,4 @@
-/// Simple pluggable in-memory event store with idempotency by (jobId,id)
+﻿/// Simple pluggable in-memory event store with idempotency by (jobId,id)
 import type { AnyDomainEvent } from '../domain/events';
 
 export interface AppendResult { appended: number; duplicateIds: string[] }

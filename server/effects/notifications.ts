@@ -1,4 +1,4 @@
-import type { OutboxItem } from '../outbox/outboxStore';
+﻿import type { OutboxItem } from '../outbox/outboxStore';
 import { auditLog } from '../observability/auditLog';
 
 export async function deliver(item: OutboxItem) {

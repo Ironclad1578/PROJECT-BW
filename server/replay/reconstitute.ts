@@ -1,4 +1,4 @@
-import type { AnyDomainEvent } from '../domain/events';
+﻿import type { AnyDomainEvent } from '../domain/events';
 import type { JobSnapshot } from '../schemas/state.zod';
 
 export function reduceToSnapshot(tenantId: string, jobId: string, events: AnyDomainEvent[]): JobSnapshot {

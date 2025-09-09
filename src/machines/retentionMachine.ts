@@ -1,4 +1,4 @@
-// PATH: src/machines/retentionMachine.ts
+﻿// PATH: src/machines/retentionMachine.ts
 import { createMachine, assign, sendParent } from 'xstate';
 
 interface Ctx { jobId: string; legalHold?: boolean; archiveAtDays: number; purgeAtDays: number; }

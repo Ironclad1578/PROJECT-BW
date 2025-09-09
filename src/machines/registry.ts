@@ -1,4 +1,4 @@
-// PATH: src/machines/registry.ts
+﻿// PATH: src/machines/registry.ts
 import { spawn } from 'xstate';
 
 export function spawnOnce<TCtx>(

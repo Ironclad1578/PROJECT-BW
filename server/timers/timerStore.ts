@@ -1,4 +1,4 @@
-// PATH: server/timers/timerStore.ts
+﻿// PATH: server/timers/timerStore.ts
 import { v4 as uuid } from 'uuid';
 
 export interface Timer {

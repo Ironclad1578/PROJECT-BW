@@ -1,4 +1,4 @@
-// PATH: src/machines/rateCardPolicyMachine.ts
+﻿// PATH: src/machines/rateCardPolicyMachine.ts
 import { createMachine, assign, sendParent } from 'xstate';
 
 export interface Line {

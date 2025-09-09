@@ -1,4 +1,4 @@
-import { createMachine, assign, spawn, sendParent } from 'xstate';
+﻿import { createMachine, assign, spawn, sendParent } from 'xstate';
 import { visitMachine } from './visitMachine';
 import { fakeApi } from '@/api/fakeApi';
 
@@ -62,8 +62,8 @@ export const worksOrderMachine = (seed: { id: string; jobId: string; tenantId?: 
                   visitMachine({
                     id: e.id,
                     worksOrderId: ctx.id,
-                    jobId: ctx.jobId,          // ← pass through for append stream
-                    tenantId: ctx.tenantId,    // ← enables server events in visitMachine
+                    jobId: ctx.jobId,          // â† pass through for append stream
+                    tenantId: ctx.tenantId,    // â† enables server events in visitMachine
                     ...(e.payload ?? {}),
                   }),
                   { name: `visit:${e.id}` }
